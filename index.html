@@ -1,0 +1,1222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta name="theme-color" content="#f6f4fc">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f4ff">
+    <title>MindMate | Student Well-Being</title>
+
+    <style>
+        :root {
+            --primary: #6856c8;
+            --primary-dark: #5140ad;
+            --background: #f6f4fc;
+            --text: #292742;
+            --muted: #77758e;
+            --white: #ffffff;
+            --border: #e9e6f3;
+            --green: #eaf6ef;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        button, input, textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #bcb0ff;
+            outline-offset: 3px;
+        }
+
+        .app {
+            max-width: 900px;
+            width: 100%;
+            margin: auto;
+            padding: 22px 18px 40px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .logo {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: #e7e1ff;
+            font-size: 27px;
+        }
+
+        .brand h1 {
+            margin: 0 0 4px;
+            font-size: 25px;
+            color: var(--primary);
+        }
+
+        .brand p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .date-chip {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 9px 12px;
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            background: white;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+        }
+
+        nav a:hover {
+            background: #eeeaff;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #7160d2, #9b8ae6);
+            color: white;
+            padding: 30px;
+            border-radius: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 10px 28px #6856c81c;
+        }
+
+        .hero-tag {
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin: 0 0 14px;
+            opacity: 0.9;
+        }
+
+        .hero h2 {
+            font-size: clamp(26px, 5vw, 36px);
+            line-height: 1.25;
+            margin: 0 0 13px;
+            max-width: 600px;
+        }
+
+        .hero p {
+            line-height: 1.8;
+            margin: 0;
+            font-size: 14px;
+            max-width: 590px;
+        }
+
+        .hero-icon {
+            font-size: 34px;
+            margin-top: 18px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+            margin-bottom: 22px;
+        }
+
+        .stat {
+            background: white;
+            padding: 18px;
+            border-radius: 17px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-icon {
+            font-size: 23px;
+        }
+
+        .stat-number {
+            font-size: 23px;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #efedf6;
+            border-radius: 22px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 22px #34305208;
+        }
+
+        .section-title {
+            margin: 0 0 8px;
+            font-size: 22px;
+        }
+
+        .section-description {
+            margin: 0 0 22px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 11px;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 9px;
+            margin-bottom: 25px;
+        }
+
+        .mood-option {
+            background: white;
+            color: var(--text);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 14px 3px;
+            transition: 0.2s;
+        }
+
+        .mood-option:hover {
+            border-color: #bcb0ff;
+            transform: translateY(-2px);
+        }
+
+        .mood-option.selected {
+            border-color: var(--primary);
+            background: #f0edff;
+        }
+
+        .mood-emoji {
+            display: block;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .mood-name {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .intensity-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 23px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            accent-color: var(--primary);
+        }
+
+        .intensity-value {
+            background: #f0edff;
+            color: var(--primary-dark);
+            border-radius: 10px;
+            padding: 9px 11px;
+            font-weight: bold;
+            min-width: 44px;
+            text-align: center;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: -16px;
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 105px;
+            padding: 13px;
+            border: 1px solid #dedbea;
+            border-radius: 12px;
+            resize: vertical;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            background: #fdfcff;
+        }
+
+        .button {
+            border: none;
+            border-radius: 11px;
+            padding: 12px 16px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .primary-button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+        }
+
+        .primary-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .secondary-button {
+            background: #efecff;
+            color: var(--primary-dark);
+        }
+
+        .secondary-button:hover {
+            background: #e4dfff;
+        }
+
+        .danger-button {
+            background: #fff0f0;
+            color: #a53232;
+        }
+
+        .status {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+            text-align: center;
+            margin: 14px 0 0;
+        }
+
+        .suggestion {
+            display: none;
+            margin-top: 18px;
+            padding: 17px;
+            background: #eef8f1;
+            border: 1px solid #d8ecdf;
+            border-radius: 14px;
+            line-height: 1.7;
+        }
+
+        .suggestion h3 {
+            color: #286643;
+            font-size: 16px;
+            margin: 0 0 8px;
+        }
+
+        .suggestion p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .history-entry {
+            border: 1px solid var(--border);
+            background: #fdfcff;
+            border-radius: 15px;
+            padding: 17px;
+            margin-bottom: 13px;
+        }
+
+        .history-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .history-mood {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .history-date {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .history-intensity {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .history-note {
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            margin: 12px 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--muted);
+            padding: 25px 8px;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .selfcare-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 13px;
+        }
+
+        .selfcare-item {
+            background: #faf9ff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .selfcare-item .activity-icon {
+            font-size: 27px;
+        }
+
+        .selfcare-item h3 {
+            font-size: 16px;
+            margin: 10px 0 7px;
+        }
+
+        .selfcare-item p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 0 0 13px;
+        }
+
+        .activity-result {
+            display: none;
+            background: #f0edff;
+            color: #403486;
+            border-radius: 13px;
+            padding: 16px;
+            margin-top: 16px;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .support-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--green);
+            padding: 22px;
+            border-radius: 20px;
+            margin-bottom: 22px;
+        }
+
+        .support-icon {
+            font-size: 28px;
+        }
+
+        .support-card h3 {
+            font-size: 16px;
+            margin: 0 0 8px;
+        }
+
+        .support-card p {
+            color: #506b5c;
+            font-size: 13px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        footer {
+            color: var(--muted);
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.9;
+            padding: 10px;
+        }
+
+        .small-note {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 560px) {
+            .app {
+                padding: 16px 11px 30px;
+            }
+
+            header {
+                align-items: flex-start;
+            }
+
+            .brand h1 {
+                font-size: 23px;
+            }
+
+            .date-chip {
+                font-size: 10px;
+                padding: 8px;
+                white-space: normal;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 24px 20px;
+                border-radius: 21px;
+            }
+
+            .card {
+                padding: 20px 15px;
+            }
+
+            .stats {
+                gap: 7px;
+            }
+
+            .stat {
+                padding: 12px 9px;
+            }
+
+            .stat-number {
+                font-size: 19px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .mood-grid {
+                gap: 5px;
+            }
+
+            .mood-option {
+                padding: 12px 1px;
+                border-radius: 11px;
+            }
+
+            .mood-emoji {
+                font-size: 23px;
+            }
+
+            .mood-name {
+                font-size: 10px;
+            }
+
+            .selfcare-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .history-top {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main class="app">
+
+    <header>
+        <div class="brand">
+            <div class="logo" aria-hidden="true">🌱</div>
+            <div>
+                <h1>MindMate</h1>
+                <p>Your space to pause and reflect</p>
+            </div>
+        </div>
+        <div class="date-chip" id="headerDate"></div>
+    </header>
+
+    <nav aria-label="Main navigation">
+        <a href="#checkin">Mood Check-In</a>
+        <a href="#history">Mood History</a>
+        <a href="#selfcare">Self-Care</a>
+    </nav>
+
+    <section class="hero">
+        <p class="hero-tag">A LITTLE REMINDER FOR YOU</p>
+        <h2>You matter. Your feelings matter.</h2>
+        <p>
+            College life can be a lot sometimes. Take a moment for
+            yourself. You don't have to figure everything out today.
+        </p>
+        <div class="hero-icon" aria-hidden="true">☁️ 🌿</div>
+    </section>
+
+    <section class="stats" aria-label="Your check-in summary">
+        <div class="stat">
+            <div class="stat-icon">📅</div>
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">Saved check-ins</div>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">💜</div>
+            <div class="stat-number" id="todayStatus">Not yet</div>
+            <div class="stat-label">Today's check-in</div>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">🌱</div>
+            <div class="stat-number" id="selfCareCount">0</div>
+            <div class="stat-label">Self-care activities tried</div>
+        </div>
+    </section>
+
+    <section class="card" id="checkin">
+        <h2 class="section-title">How are you feeling today?</h2>
+        <p class="section-description">
+            There are no right or wrong answers. Choose the feeling
+            that best describes your day.
+        </p>
+
+        <div class="mood-grid" id="moodGrid">
+            <button type="button" class="mood-option"
+                data-mood="Happy" aria-pressed="false">
+                <span class="mood-emoji">😊</span>
+                <span class="mood-name">Happy</span>
+            </button>
+
+            <button type="button" class="mood-option"
+                data-mood="Calm" aria-pressed="false">
+                <span class="mood-emoji">😌</span>
+                <span class="mood-name">Calm</span>
+            </button>
+
+            <button type="button" class="mood-option"
+                data-mood="Okay" aria-pressed="false">
+                <span class="mood-emoji">🙂</span>
+                <span class="mood-name">Okay</span>
+            </button>
+
+            <button type="button" class="mood-option"
+                data-mood="Stressed" aria-pressed="false">
+                <span class="mood-emoji">😣</span>
+                <span class="mood-name">Stressed</span>
+            </button>
+
+            <button type="button" class="mood-option"
+                data-mood="Sad" aria-pressed="false">
+                <span class="mood-emoji">😔</span>
+                <span class="mood-name">Sad</span>
+            </button>
+        </div>
+
+        <label class="label" for="intensity">
+            How strong is this feeling?
+        </label>
+
+        <div class="intensity-row">
+            <input type="range" id="intensity"
+                min="1" max="5" value="3">
+            <output class="intensity-value"
+                id="intensityValue" for="intensity">3/5</output>
+        </div>
+
+        <div class="range-labels">
+            <span>A little</span>
+            <span>Very strong</span>
+        </div>
+
+        <label class="label" for="note">
+            Write down anything on your mind (optional)
+        </label>
+
+        <textarea id="note" maxlength="1000"
+            placeholder="How was your day? What would you like to remember?"></textarea>
+
+        <button type="button" class="button primary-button"
+            id="saveButton">
+            Save Today's Check-In
+        </button>
+
+        <p class="status" id="savedStatus" aria-live="polite">
+            Choose a mood to begin your daily check-in.
+        </p>
+
+        <div class="suggestion" id="suggestion" aria-live="polite">
+            <h3 id="suggestionTitle"></h3>
+            <p id="suggestionText"></p>
+        </div>
+    </section>
+
+    <section class="card" id="history">
+        <h2 class="section-title">Your Mood History</h2>
+        <p class="section-description">
+            Look back at your previous check-ins and reflect on
+            how you have been feeling.
+        </p>
+
+        <div id="historyList">
+            <p class="empty-state">
+                Your saved check-ins will appear here.
+            </p>
+        </div>
+
+        <button type="button" class="button danger-button"
+            id="clearHistoryButton">
+            Clear All History
+        </button>
+    </section>
+
+    <section class="card" id="selfcare">
+        <h2 class="section-title">A Little Care for Yourself</h2>
+        <p class="section-description">
+            You don't need to do everything. Choose one small
+            activity that feels right for you today.
+        </p>
+
+        <div class="selfcare-grid">
+            <article class="selfcare-item">
+                <div class="activity-icon">🌬️</div>
+                <h3>Take a Breathing Break</h3>
+                <p>
+                    Sit comfortably, relax your shoulders, and take
+                    a few slow, gentle breaths without forcing them.
+                </p>
+                <button type="button"
+                    class="button secondary-button activity-button"
+                    data-activity="Breathing break">
+                    Try This
+                </button>
+            </article>
+
+            <article class="selfcare-item">
+                <div class="activity-icon">🎵</div>
+                <h3>Listen to Music</h3>
+                <p>
+                    Choose a song that helps you feel comfortable,
+                    relaxed, or connected to a good memory.
+                </p>
+                <button type="button"
+                    class="button secondary-button activity-button"
+                    data-activity="Music break">
+                    Try This
+                </button>
+            </article>
+
+            <article class="selfcare-item">
+                <div class="activity-icon">🚶</div>
+                <h3>Move a Little</h3>
+                <p>
+                    If you feel up to it, stretch gently or take
+                    a short walk in a comfortable place.
+                </p>
+                <button type="button"
+                    class="button secondary-button activity-button"
+                    data-activity="Gentle movement">
+                    Try This
+                </button>
+            </article>
+
+            <article class="selfcare-item">
+                <div class="activity-icon">💌</div>
+                <h3>Connect with Someone</h3>
+                <p>
+                    Send a message to a friend or talk to someone
+                    you trust. You don't have to explain everything.
+                </p>
+                <button type="button"
+                    class="button secondary-button activity-button"
+                    data-activity="Connect with someone">
+                    Try This
+                </button>
+            </article>
+        </div>
+
+        <div class="activity-result" id="activityResult"
+            aria-live="polite"></div>
+    </section>
+
+    <section class="support-card">
+        <div class="support-icon" aria-hidden="true">💚</div>
+        <div>
+            <h3>It's okay to ask for support</h3>
+            <p>
+                You don't have to handle everything alone. Talking
+                with someone you trust can help. If difficult feelings
+                continue or affect daily life, consider speaking with
+                a qualified mental health professional or college
+                counsellor.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        MindMate · A small step toward understanding yourself.<br>
+        This app supports self-reflection. It does not diagnose
+        or replace professional mental health care.<br>
+        Check-ins and notes are stored in this browser on this device.
+        They are not encrypted or synced to an account.
+    </footer>
+
+</main>
+
+<script>
+    const STORAGE_KEY = "mindmateCheckins";
+    const ACTIVITY_KEY = "mindmateSelfCare";
+
+    const moodButtons = document.querySelectorAll(".mood-option");
+    const intensity = document.getElementById("intensity");
+    const intensityValue = document.getElementById("intensityValue");
+    const note = document.getElementById("note");
+    const saveButton = document.getElementById("saveButton");
+    const savedStatus = document.getElementById("savedStatus");
+    const suggestion = document.getElementById("suggestion");
+    const suggestionTitle = document.getElementById("suggestionTitle");
+    const suggestionText = document.getElementById("suggestionText");
+    const historyList = document.getElementById("historyList");
+    const clearHistoryButton = document.getElementById("clearHistoryButton");
+    const activityResult = document.getElementById("activityResult");
+
+    let selectedMood = "";
+
+    const moodInfo = {
+        Happy: {
+            emoji: "😊",
+            title: "Hold on to this good moment 🌻",
+            text: "Notice what helped you feel good today. If you like, share a little of that happiness with someone."
+        },
+        Calm: {
+            emoji: "😌",
+            title: "Give yourself space to breathe 🌿",
+            text: "Enjoy this calmer moment. You could take a gentle walk, listen to music, or rest without rushing."
+        },
+        Okay: {
+            emoji: "🙂",
+            title: "An ordinary day is okay too 💜",
+            text: "You don't have to feel amazing every day. Choose one small thing that would make the rest of your day easier."
+        },
+        Stressed: {
+            emoji: "😣",
+            title: "Let's take one small step 🌱",
+            text: "Pause if you can, relax your shoulders, and breathe gently. Then choose one manageable task or ask someone for help."
+        },
+        Sad: {
+            emoji: "😔",
+            title: "Be gentle with yourself 💚",
+            text: "You don't need to force yourself to feel better immediately. Try a comforting activity or reach out to someone you trust."
+        }
+    };
+
+    function localDateKey(date = new Date()) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return year + "-" + month + "-" + day;
+    }
+
+    function formatDate(dateKey) {
+        const parts = dateKey.split("-").map(Number);
+        const date = new Date(parts[0], parts[1] - 1, parts[2]);
+
+        return date.toLocaleDateString(undefined, {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+    function readCheckins() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            const data = raw ? JSON.parse(raw) : {};
+
+            if (!data || typeof data !== "object" ||
+                Array.isArray(data)) {
+                return {};
+            }
+
+            const valid = {};
+
+            Object.keys(data).forEach(function(date) {
+                const entry = data[date];
+
+                if (/^\d{4}-\d{2}-\d{2}$/.test(date) &&
+                    entry &&
+                    Object.prototype.hasOwnProperty.call(moodInfo, entry.mood) &&
+                    Number.isInteger(entry.intensity) &&
+                    entry.intensity >= 1 &&
+                    entry.intensity <= 5 &&
+                    typeof entry.note === "string") {
+                    valid[date] = {
+                        mood: entry.mood,
+                        intensity: entry.intensity,
+                        note: entry.note.slice(0, 1000)
+                    };
+                }
+            });
+
+            return valid;
+        } catch (error) {
+            return {};
+        }
+    }
+
+    function saveCheckins(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function readActivities() {
+        try {
+            const raw = localStorage.getItem(ACTIVITY_KEY);
+            const data = raw ? JSON.parse(raw) : {};
+
+            return data && typeof data === "object" &&
+                !Array.isArray(data) ? data : {};
+        } catch (error) {
+            return {};
+        }
+    }
+
+    function updateStats() {
+        const checkins = readCheckins();
+        const today = localDateKey();
+        const activities = readActivities();
+
+        document.getElementById("totalCount").textContent =
+            Object.keys(checkins).length;
+
+        document.getElementById("todayStatus").textContent =
+            checkins[today] ? "Done ✓" : "Not yet";
+
+        document.getElementById("selfCareCount").textContent =
+            Object.values(activities).reduce(function(total, value) {
+                return total +
+                    (Array.isArray(value) ? value.length : 0);
+            }, 0);
+    }
+
+    function showSuggestion(mood) {
+        const info = moodInfo[mood];
+
+        if (!info) {
+            suggestion.style.display = "none";
+            return;
+        }
+
+        suggestionTitle.textContent = info.title;
+        suggestionText.textContent = info.text;
+        suggestion.style.display = "block";
+    }
+
+    function selectMood(mood) {
+        selectedMood = mood;
+
+        moodButtons.forEach(function(button) {
+            const selected = button.dataset.mood === mood;
+
+            button.classList.toggle("selected", selected);
+            button.setAttribute("aria-pressed", String(selected));
+        });
+    }
+
+    moodButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            selectMood(button.dataset.mood);
+            suggestion.style.display = "none";
+            savedStatus.textContent =
+                "Mood selected. Save when you're ready.";
+        });
+    });
+
+    intensity.addEventListener("input", function() {
+        intensityValue.textContent = intensity.value + "/5";
+    });
+
+    function renderHistory() {
+        const checkins = readCheckins();
+
+        historyList.replaceChildren();
+
+        const dates = Object.keys(checkins).sort().reverse();
+
+        if (dates.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "empty-state";
+            empty.textContent =
+                "No saved check-ins yet. Save your first mood to begin your history.";
+            historyList.appendChild(empty);
+            updateStats();
+            return;
+        }
+
+        dates.forEach(function(date) {
+            const entry = checkins[date];
+            const info = moodInfo[entry.mood];
+
+            if (!info) {
+                return;
+            }
+
+            const card = document.createElement("article");
+            card.className = "history-entry";
+
+            const top = document.createElement("div");
+            top.className = "history-top";
+
+            const left = document.createElement("div");
+
+            const mood = document.createElement("div");
+            mood.className = "history-mood";
+            mood.textContent = info.emoji + " " + entry.mood;
+
+            const dateLabel = document.createElement("div");
+            dateLabel.className = "history-date";
+            dateLabel.textContent = formatDate(date);
+
+            left.appendChild(mood);
+            left.appendChild(dateLabel);
+
+            const score = document.createElement("div");
+            score.className = "history-intensity";
+            score.textContent = "Intensity: " + entry.intensity + "/5";
+
+            top.appendChild(left);
+            top.appendChild(score);
+            card.appendChild(top);
+
+            if (entry.note) {
+                const noteText = document.createElement("p");
+                noteText.className = "history-note";
+                noteText.textContent = entry.note;
+                card.appendChild(noteText);
+            }
+
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.className = "button danger-button";
+            deleteButton.textContent = "Delete Entry";
+
+            deleteButton.addEventListener("click", function() {
+                if (!confirm("Delete the check-in for " +
+                    formatDate(date) + "?")) {
+                    return;
+                }
+
+                const latest = readCheckins();
+                delete latest[date];
+
+                try {
+                    saveCheckins(latest);
+
+                    if (date === localDateKey()) {
+                        resetForm();
+                        savedStatus.textContent =
+                            "Today's check-in has been deleted.";
+                    }
+
+                    renderHistory();
+                    updateStats();
+                } catch (error) {
+                    alert("Unable to delete the entry. Check browser storage.");
+                }
+            });
+
+            card.appendChild(deleteButton);
+            historyList.appendChild(card);
+        });
+
+        updateStats();
+    }
+
+    function resetForm() {
+        selectedMood = "";
+        selectMood("");
+        intensity.value = 3;
+        intensityValue.textContent = "3/5";
+        note.value = "";
+        suggestion.style.display = "none";
+    }
+
+    function loadToday() {
+        const checkins = readCheckins();
+        const entry = checkins[localDateKey()];
+
+        if (!entry) {
+            savedStatus.textContent =
+                "Choose a mood to begin your daily check-in.";
+            return;
+        }
+
+        selectMood(entry.mood);
+        intensity.value = entry.intensity;
+        intensityValue.textContent = entry.intensity + "/5";
+        note.value = entry.note;
+        savedStatus.textContent =
+            "You checked in today. You can update your entry.";
+        showSuggestion(entry.mood);
+    }
+
+    saveButton.addEventListener("click", function() {
+        if (!selectedMood || !moodInfo[selectedMood]) {
+            alert("Please select a mood before saving your check-in.");
+            return;
+        }
+
+        const checkins = readCheckins();
+
+        checkins[localDateKey()] = {
+            mood: selectedMood,
+            intensity: Number(intensity.value),
+            note: note.value.trim().slice(0, 1000)
+        };
+
+        try {
+            saveCheckins(checkins);
+            savedStatus.textContent =
+                "✓ Today's check-in has been saved on this device.";
+
+            showSuggestion(selectedMood);
+            renderHistory();
+            updateStats();
+        } catch (error) {
+            savedStatus.textContent =
+                "Your browser could not save this entry.";
+            alert("Unable to save. Check your browser storage settings.");
+        }
+    });
+
+    clearHistoryButton.addEventListener("click", function() {
+        if (!confirm(
+            "Delete all saved mood check-ins and notes? This cannot be undone."
+        )) {
+            return;
+        }
+
+        try {
+            localStorage.removeItem(STORAGE_KEY);
+            resetForm();
+
+            savedStatus.textContent = "Your mood history has been cleared.";
+
+            renderHistory();
+            updateStats();
+        } catch (error) {
+            alert("Unable to clear history. Check browser storage settings.");
+        }
+    });
+
+    document.querySelectorAll(".activity-button").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const activity = button.dataset.activity;
+            const activities = readActivities();
+            const today = localDateKey();
+
+            if (!Array.isArray(activities[today])) {
+                activities[today] = [];
+            }
+
+            if (!activities[today].includes(activity)) {
+                activities[today].push(activity);
+            }
+
+            const instructions = {
+                "Breathing break":
+                    "Sit comfortably. Breathe in gently, then breathe out slowly. Repeat a few times at your own pace. Stop if you feel uncomfortable.",
+                "Music break":
+                    "Choose a song you enjoy. Put aside other tasks for a moment and listen without needing to do anything else.",
+                "Gentle movement":
+                    "If it feels comfortable, stand up, stretch gently, or walk around for a few minutes. Rest whenever you need to.",
+                "Connect with someone":
+                    "Think of someone you trust. You could send a simple message such as, 'Hey, how are you? Can we talk for a little while?'"
+            };
+
+            activityResult.textContent =
+                activity + ": " + instructions[activity];
+            activityResult.style.display = "block";
+
+            try {
+                localStorage.setItem(
+                    ACTIVITY_KEY,
+                    JSON.stringify(activities)
+                );
+                updateStats();
+            } catch (error) {
+                alert("The activity opened, but its progress could not be saved.");
+            }
+        });
+    });
+
+    document.getElementById("headerDate").textContent =
+        new Date().toLocaleDateString(undefined, {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
+
+    loadToday();
+    renderHistory();
+    updateStats();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./sw.js")
+            .catch(function (error) {
+                console.error(
+                    "MindMate service worker registration failed:",
+                    error
+                );
+            });
+    });
+}
+</script>
+</body>
+</html>
